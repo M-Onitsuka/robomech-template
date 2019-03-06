@@ -31,7 +31,7 @@ In the musculoskeletal humanoid trying to make use of advantage of the human bod
 }
 
 \date{} % 日付を出力しない
-\keywords{Biomimetic Humanoid, Ligaments, Planar structure}
+\keywords{Biomimetic Humanoid, Ligaments, Planar structure, Screw-Home Movement}
 
 \maketitle
 \thispagestyle{empty}
@@ -41,7 +41,7 @@ In the musculoskeletal humanoid trying to make use of advantage of the human bod
 \section{はじめに}
 筋骨格ヒューマノイド\cite{SR2017:asano:design}は人体を模した身体構造を特徴とし、骨格の周囲にアクチュエータとして筋を配置して駆動する人型ロボットである。人体模倣を規範として設計され、人の様な巧みな身体動作が期待される。人体の骨格に見られる柔軟な劣駆動多節構造を有する背骨や特異点の存在しない開放型球関節が実現されていることに加え、冗長に多数取り付けられた筋によって関節の可変剛性制御を可能としている。人のような動作の実現のためには、人の関節の構造や機能に学ぶ必要があり、重要な役割を持つ構造の一つとして靭帯が挙げられる。
 
-靭帯は筋と同様に関節をまたいで骨格同士を牽引するが、関節に対し受動的に働くという点で役割が異なる。靭帯の主な機能は関節に拘束を設け骨格間の相対運動の方向や可動域を決定することである。筋が脱力していたり有効に張力が伝えられない場合も受動的な力を関節に及ぼし、脱臼を防ぐなど関節の安定化に貢献している。多くのロボットでは軸受けや関節リミット機能をリジッドなハードウェアで実装しているが、リジッドな関節拘束は衝撃をハードウェアで吸収できず致命的な破壊が起きうる。人のような動作に耐え、柔らかで複雑な可動域を持つ関節を実現するためには靭帯を含めた関節構造を考える必要がある。
+靭帯は筋と同様に関節をまたいで骨格同士を牽引するが、関節に対し受動的に働くという点で役割が異なる。靭帯の主な機能は関節に拘束を設け骨格間の相対運動の方向や可動域を決定することである。筋が脱力していたり有効に張力が伝えられない場合も受動的な力を関節に及ぼし、脱臼を防ぐなど関節の安定化に貢献している\cite{kapandji}。多くのロボットでは軸受けや関節リミット機能をリジッドなハードウェアで実装しているが、リジッドな関節拘束は衝撃をハードウェアで吸収できず致命的な破壊が起きうる。人のような動作に耐え、柔らかで複雑な可動域を持つ関節を実現するためには靭帯を含めた関節構造を考える必要がある。
 
 柔らかい素材による関節の拘束についての研究として開放型球関節の並進運動を拘束する関節包\cite{Biorob2018:fujii:capsule}や膝関節の運動を転がり曲面に拘束する靭帯ついての研究\cite{RoboSym:sonoda:ligaments}、人の手を精巧に模したロボットハンドで編地とゴムによって靭帯を実装した研究\cite{ICRA2016:xu:hand}がある。\cite{Biorob2018:fujii:capsule}は関節全体をゴムで包むことで人と同様の可動域を実現しつつ脱臼を防いでいるが、ゴムの強度と可動域にトレードオフがあり、広い可動域を確保するために強度を犠牲にしている上、ゴムの劣化も生じる。\cite{RoboSym:sonoda:ligaments}ではいくつかの繊維を束ねた靭帯によって人の膝における転がり運動への拘束を実現しているが2次元運動のみを扱っており、膝の回旋は考慮に入れていない。\cite{ICRA2016:xu:hand}では人体の関節構造を実装する際に靭帯を設けることで物体の柔軟な把持を可能とし、人体の手の構造における靭帯の有効性を示している。
 
@@ -50,17 +50,17 @@ In the musculoskeletal humanoid trying to make use of advantage of the human bod
 本研究では骨格同士を牽引する構造として靭帯に着目し、人体における面状組織を模した構造、面状牽引構造を有する靭帯を球体関節に実装し、面状牽引構造の評価と人体の関節と同様の機能を実現する。
 まず面状牽引構造の利点について述べ、ワイヤを非線形弾性要素とみなしてモデル化して評価を行う。次に実際に球体関節周りにワイヤで作った靭帯を取り付けて外力をかけ、モデルと同様の結果が得られることを確認する。最後に膝関節の側副靭帯を布で実装し人と同様の機能が実現されていることを確認する。
 
-\section{面状牽引構造}
-\subsection{面状牽引構造の利点}
-筋や靭帯などの骨格間牽引構造について、ワイヤや紡錘形のように骨格に点で取り付けられ線状に接触するものを線状牽引構造とし、骨格に線で取り付けられ面で接触する構造を面状牽引構造とする。\reffig{fig:schema}に線状牽引構造と面状牽引構造の比較の模式図を示す。面状牽引構造は線状牽引構造に比べて次の利点を持つ。
-
-\begin{figure}[tb]
+\begin{figure}[!t]
  \centering
   \includegraphics[width=1.0\columnwidth]{figs/schematic-comparison-of-structure.pdf}
   \vspace*{-4mm}
   \caption{Comparison between linear traction structure and planar traction structure.}
   \label{fig:schema}
 \end{figure}
+
+\section{面状牽引構造}
+\subsection{面状牽引構造の利点}
+筋や靭帯などの骨格間牽引構造について、ワイヤや紡錘形のように骨格に点で取り付けられ線状に接触するものを線状牽引構造とし、骨格に線で取り付けられ面で接触する構造を面状牽引構造とする。\reffig{fig:schema}に線状牽引構造と面状牽引構造の比較の模式図を示す。面状牽引構造は線状牽引構造に比べて次の利点を持つ。
 
 \begin{enumerate}
 \item 面構造による骨格曲面との安定的接触
@@ -93,7 +93,7 @@ ${K=1.0}$/mm、${l_d=0.5}$mmとし、${l_0}$は取り付け位置の間隔が\re
 
 \begin{figure}[tb]
  \centering
-  \includegraphics[width=0.7\columnwidth]{figs/schematic-comparison-of-ligaments.pdf}
+  \includegraphics[width=0.8\columnwidth]{figs/schematic-comparison-of-ligaments.pdf}
   \vspace*{-4mm}
   \caption{Schematic diagram of traction structures. Planar structure is simplified as wires which pulls parallel and cross direction}
   \label{fig:comparison}
